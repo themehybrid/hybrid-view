@@ -16,6 +16,12 @@
 		"issues" : "https://github.com/justintadlock/hybrid-view/issues",
 		"forum"  : "https://themehybrid.com/board/topics"
 	},
+  "repositories": [
+	{
+	  "type": "vcs",
+	  "url": "https://github.com/saas786/hybrid-template"
+	}
+  ],
 	"autoload"    : {
 		"psr-4" : {
 			"Hybrid\\View\\" : "src/"
@@ -26,6 +32,7 @@
 	},
 	"require"     : {
 		"php" : ">=5.6",
-		"justintadlock/hybrid-core" : "^5.2.0"
+		"justintadlock/hybrid-core" : "^5.2.0",
+	  	"justintadlock/hybrid-template": "dev-dev"
 	}
 }
