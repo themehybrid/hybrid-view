@@ -1,6 +1,6 @@
 # Hybrid\\View
 
-Hybrid View is an add-on package for the [Hybrid Core](https://github.com/justintadlock/hybrid-core) WordPress framework.
+Hybrid View is an add-on package for the [Hybrid Core](https://github.com/themehybrid/hybrid-core) WordPress framework.
 This file maintains the `View` class.  It's used for setting up and rendering theme template files.
 Views are a bit like a suped-up version of the core WordPress `get_template_part()` function.
 However, it allows you to build a hierarchy of potential templates as well as pass in any arbitrary data to your templates for use.
@@ -28,7 +28,7 @@ cd path/to/wp-content/themes/<your-theme-name>
 Then, use Composer to install the package.
 
 ```bash
-composer require justintadlock/hybrid-media
+composer require themehybrid/hybrid-media
 ```
 
 ### Register the service provider
@@ -49,4 +49,4 @@ $app->provider( \Hybrid\View\ViewServiceProvider::class );
 
 This project is licensed under the [GNU GPL](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html), version 2 or later.
 
-2021 &copy; [Justin Tadlock](http://justintadlock.com).
+2008&thinsp;&ndash;&thinsp;2021 &copy; [Justin Tadlock](https://themehybrid.com).

@@ -1,8 +1,8 @@
 {
-	"name"        : "justintadlock/hybrid-view",
-	"description" : "Additional theme specific features for the Hybrid Core framework.",
+	"name"        : "themehybrid/hybrid-view",
+	"description" : "Hybrid View is an add-on for Hybrid Core framework. It's used for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
 	"keywords"    : [ "wordpress" ],
-	"homepage"    : "https://github.com/justintadlock/hybrid-view",
+	"homepage"    : "https://github.com/themehybrid/hybrid-view",
 	"license"     : "GPL-2.0-or-later",
 	"authors"     : [
 		{
@@ -13,13 +13,13 @@
 		}
 	],
 	"support"     : {
-		"issues" : "https://github.com/justintadlock/hybrid-view/issues",
-		"forum"  : "https://themehybrid.com/board/topics"
+		"issues" : "https://github.com/themehybrid/hybrid-view/issues",
+		"forum"  : "https://themehybrid.com/board/forums/hybrid-core"
 	},
   "repositories": [
 	{
 	  "type": "vcs",
-	  "url": "https://github.com/saas786/hybrid-template"
+	  "url": "https://github.com/themehybrid/hybrid-template"
 	}
   ],
 	"autoload"    : {
