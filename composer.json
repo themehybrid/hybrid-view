@@ -32,6 +32,6 @@
 	},
 	"require"     : {
 		"php" : ">=5.6",
-	  	"justintadlock/hybrid-template": "dev-main#0558b17"
+	  	"themehybrid/hybrid-template": "^6.0.0-alpha.1"
 	}
 }
