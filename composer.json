@@ -16,12 +16,6 @@
 		"issues" : "https://github.com/themehybrid/hybrid-view/issues",
 		"forum"  : "https://themehybrid.com/board/forums/hybrid-core"
 	},
-  "repositories": [
-	{
-	  "type": "vcs",
-	  "url": "https://github.com/themehybrid/hybrid-template"
-	}
-  ],
 	"autoload"    : {
 		"psr-4" : {
 			"Hybrid\\View\\" : "src/"
@@ -32,6 +26,8 @@
 	},
 	"require"     : {
 		"php" : ">=5.6",
-	  	"themehybrid/hybrid-template": "^1.0.0"
+	  	"themehybrid/hybrid-template": "^1.0.0",
+	  	"themehybrid/hybrid-contracts" : "^1.0.0",
+	  	"themehybrid/hybrid-tools" : "^1.0.0"
 	}
 }
