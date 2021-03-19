@@ -31,13 +31,13 @@ composer require themehybrid/hybrid-view
 You need to register the service provider during your bootstrapping process.  In your bootstrapping code, you should have something like the following:
 
 ```php
-$theme = new \Hybrid\Core\Application();
+$themeslug = new \Hybrid\Core\Application();
 ```
 
 After that point, you can register the service provider:
 
 ```php
-$theme->provider( \Hybrid\View\ViewServiceProvider::class );
+$themeslug->provider( \Hybrid\View\ViewServiceProvider::class );
 ```
 
 ## Copyright and License
