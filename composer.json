@@ -27,11 +27,11 @@
 			"Hybrid\\View\\" : "src/"
 		},
 		"files" : [
-			"src/bootstrap-view.php"
+			"src/functions-view.php"
 		]
 	},
 	"require"     : {
 		"php" : ">=5.6",
-	  	"themehybrid/hybrid-template": "^6.0.0-alpha.1"
+	  	"themehybrid/hybrid-template": "^1.0.0"
 	}
 }
