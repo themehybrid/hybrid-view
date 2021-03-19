@@ -14,8 +14,8 @@
 
 namespace Hybrid\View\Contracts;
 
-use Hybrid\Support\Contracts\Renderable;
-use Hybrid\Support\Contracts\Displayable;
+use Hybrid\Contracts\Renderable;
+use Hybrid\Contracts\Displayable;
 
 /**
  * View interface.

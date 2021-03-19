@@ -16,7 +16,7 @@
 
 namespace Hybrid\View;
 
-use Hybrid\Support\Tools\ServiceProvider;
+use Hybrid\Tools\ServiceProvider;
 use Hybrid\View\Contracts\Engine as EngineContract;
 use Hybrid\View\Contracts\View   as ViewContract;
 

@@ -17,7 +17,7 @@ namespace Hybrid\View;
 
 use Hybrid\View\Contracts\View;
 use Hybrid\Proxies\App;
-use Hybrid\Support\Tools\Collection;
+use Hybrid\Tools\Collection;
 
 /**
  * Engine class.
