@@ -6,7 +6,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2021, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -15,12 +15,12 @@ namespace Hybrid\View;
 
 use Hybrid\View\Contracts\Engine;
 use Hybrid\Proxies\App;
-use Hybrid\Support\Tools\Collection;
+use Hybrid\Tools\Collection;
 
 /**
  * Returns a view object.
  *
- * @since  5.0.0
+ * @since  1.0.0
  * @access public
  * @param  string            $name
  * @param  array|string      $slugs
@@ -35,7 +35,7 @@ function view( $name, $slugs = [], $data = [] ) {
 /**
  * Outputs a view template.
  *
- * @since  5.0.0
+ * @since  1.0.0
  * @access public
  * @param  string            $name
  * @param  array|string      $slugs
@@ -50,7 +50,7 @@ function display( $name, $slugs = [], $data = [] ) {
 /**
  * Returns a view template as a string.
  *
- * @since  5.0.0
+ * @since  1.0.0
  * @access public
  * @param  string            $name
  * @param  array|string      $slugs

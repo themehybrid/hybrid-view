@@ -8,7 +8,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2021, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -17,7 +17,7 @@ namespace Hybrid\View;
 
 use Hybrid\View\Contracts\View;
 use Hybrid\Proxies\App;
-use Hybrid\Support\Tools\Collection;
+use Hybrid\Tools\Collection;
 
 /**
  * Engine class.
