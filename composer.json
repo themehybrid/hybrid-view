@@ -26,7 +26,7 @@
 	},
 	"require"     : {
 		"php" : ">=5.6",
-                "themehybrid/hybrid-core"       : "6.0.x-dev",
+                "themehybrid/hybrid-core"       : "dev-master",
 		"themehybrid/hybrid-contracts"  : "dev-master",
 		"themehybrid/hybrid-template"   : "dev-master",
 		"themehybrid/hybrid-tools"      : "dev-master"
