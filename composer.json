@@ -1,6 +1,6 @@
 {
 	"name"        : "themehybrid/hybrid-view",
-	"description" : "Hybrid View is an add-on for Hybrid Core framework. It's used for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
+	"description" : "System for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
 	"keywords"    : [ "wordpress" ],
 	"homepage"    : "https://github.com/themehybrid/hybrid-view",
 	"license"     : "GPL-2.0-or-later",

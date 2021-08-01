@@ -42,9 +42,5 @@ class Provider extends ServiceProvider {
 
 		// Bind a single instance of the engine contract.
 		$this->app->singleton( EngineContract::class, Engine::class );
-
-		// Create aliases for the view and engine.
-		$this->app->alias( ViewContract::class,   'view'        );
-		$this->app->alias( EngineContract::class, 'view/engine' );
 	}
 }

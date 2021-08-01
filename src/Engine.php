@@ -61,7 +61,6 @@ class Engine {
 	 * @return void
 	 */
 	public function display( $name, $slugs = [], $data = [] ) {
-
 		$this->view( $name, $slugs, $data )->display();
 	}
 
@@ -76,7 +75,6 @@ class Engine {
 	 * @return string
 	 */
 	public function render( $name, $slugs = [], $data = [] ) {
-
 		return $this->view( $name, $slugs, $data )->render();
 	}
 }

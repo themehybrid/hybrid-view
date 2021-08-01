@@ -102,7 +102,6 @@ class View implements ViewContract {
 	 * @return string
 	 */
 	public function __toString() {
-
 		return $this->render();
 	}
 
@@ -114,7 +113,6 @@ class View implements ViewContract {
 	 * @return array
 	 */
 	public function slugs() {
-
 		return (array) $this->slugs;
 	}
 
@@ -130,13 +128,11 @@ class View implements ViewContract {
 
 		// Uses the slugs to build a hierarchy.
 		foreach ( $this->slugs as $slug ) {
-
 			$templates[] = "{$this->name}/{$slug}.php";
 		}
 
 		// Add in a `default.php` template.
 		if ( ! in_array( 'default', $this->slugs ) ) {
-
 			$templates[] = "{$this->name}/default.php";
 		}
 
@@ -155,7 +151,6 @@ class View implements ViewContract {
 	 * @return string
 	 */
 	protected function locate() {
-
 		return locate_template( $this->hierarchy() );
 	}
 
@@ -215,7 +210,6 @@ class View implements ViewContract {
 	 * @return string
 	 */
 	public function render() {
-
 		ob_start();
 		$this->display();
 		return ob_get_clean();
@@ -244,7 +238,6 @@ class View implements ViewContract {
 
 		// Compat with `get_template_part()`.
 		} else {
-
 			do_action( "get_template_part_{$this->name}", $this->name, $slug );
 		}
 	}
