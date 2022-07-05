@@ -5,65 +5,66 @@
  * Template functions related to views.
  *
  * @package   HybridCore
- * @link      https://github.com/themehybrid/hybrid-view
+ * @link      https://themehybrid.com/hybrid-core
  *
- * @author    Theme Hybrid
- * @copyright Copyright (c) 2008 - 2023, Theme Hybrid
+ * @author    Justin Tadlock <justintadlock@gmail.com>
+ * @copyright Copyright (c) 2008 - 2021, Justin Tadlock
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 namespace Hybrid\View;
 
-use Hybrid\Proxies\App;
-use Hybrid\View\Contracts\Engine;
+use Hybrid\Contracts\View\Factory as ViewFactory;
+
+use function Hybrid\app;
 
 if ( ! function_exists( __NAMESPACE__ . '\\view' ) ) {
+
     /**
-     * Returns a view object.
+     * Get the evaluated view contents for the given view.
      *
-     * @since  1.0.0
-     * @param  string                        $name
-     * @param  array|string                  $slugs
-     * @param  array|\Hybrid\View\Collection $data
-     * @return \Hybrid\View\View
-     *
-     * @access public
+     * @param  string|null                       $view
+     * @param  \Hybrid\Contracts\Arrayable|array $data
+     * @param  array                             $mergeData
+     * @return \Hybrid\Contracts\View\View|\Hybrid\Contracts\View\Factory
      */
-    function view( $name, $slugs = [], $data = [] ) {
-        return App::resolve( Engine::class )->view( $name, $slugs, $data );
+    function view( $view = null, $data = [], $mergeData = [] ) {
+        $factory = app( ViewFactory::class );
+
+        if ( func_num_args() === 0 ) {
+            return $factory;
+        }
+
+        return $factory->make( $view, $data, $mergeData );
     }
 }
 
 if ( ! function_exists( __NAMESPACE__ . '\\display' ) ) {
+
     /**
-     * Outputs a view template.
+     * Display the evaluated view contents for the given view.
      *
-     * @since  1.0.0
-     * @param  string                        $name
-     * @param  array|string                  $slugs
-     * @param  array|\Hybrid\View\Collection $data
-     * @return void
-     *
-     * @access public
+     * @param  string|null                       $view
+     * @param  \Hybrid\Contracts\Arrayable|array $data
+     * @param  array                             $mergeData
+     * @return \Hybrid\Contracts\View\View|\Hybrid\Contracts\View\Factory
      */
-    function display( $name, $slugs = [], $data = [] ) {
-        view( $name, $slugs, $data )->display();
+    function display( $view = null, $data = [], $mergeData = [] ) {
+        view( $view, $data, $mergeData )->display();
     }
 }
 
 if ( ! function_exists( __NAMESPACE__ . '\\render' ) ) {
+
     /**
-     * Returns a view template as a string.
+     * Return the evaluated view contents for the given view.
      *
-     * @since  1.0.0
-     * @param  string                        $name
-     * @param  array|string                  $slugs
-     * @param  array|\Hybrid\View\Collection $data
-     * @return string
-     *
-     * @access public
+     * @param  string|null                       $view
+     * @param  \Hybrid\Contracts\Arrayable|array $data
+     * @param  array                             $mergeData
+     * @return \Hybrid\Contracts\View\View|\Hybrid\Contracts\View\Factory
      */
-    function render( $name, $slugs = [], $data = [] ) {
-        return view( $name, $slugs, $data )->render();
+    function render( $view = null, $data = [], $mergeData = [] ) {
+        return view( $view, $data, $mergeData )->render();
     }
 }
