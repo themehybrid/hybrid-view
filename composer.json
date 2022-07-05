@@ -1,34 +1,58 @@
 {
-	"name"        : "themehybrid/hybrid-view",
-	"description" : "System for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
-	"keywords"    : [ "wordpress" ],
-	"homepage"    : "https://github.com/themehybrid/hybrid-view",
-	"license"     : "GPL-2.0-or-later",
-	"authors"     : [
+	"name": "themehybrid/hybrid-view",
+	"description": "The Views package.",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"php"
+	],
+	"authors": [
 		{
-			"name"     : "Justin Tadlock",
-			"email"    : "justintadlock@gmail.com",
-			"homepage" : "https://themehybrid.com",
-			"role"     : "Developer"
+			"name": "Theme Hybrid",
+			"email": "themehybrid@gmail.com",
+			"homepage": "https://themehybrid.com",
+			"role": "Developer"
 		}
 	],
-	"support"     : {
-		"issues" : "https://github.com/themehybrid/hybrid-view/issues",
-		"forum"  : "https://themehybrid.com/board/forums/hybrid-core"
+	"homepage": "https://github.com/themehybrid/hybrid-view",
+	"support": {
+		"issues": "https://github.com/themehybrid/hybrid-view/issues",
+		"forum": "https://themehybrid.com/board/forums/hybrid-core"
 	},
-	"autoload"    : {
-		"psr-4" : {
-			"Hybrid\\View\\" : "src/"
+	"require": {
+		"php": "^8.1",
+		"themehybrid/hybrid-contracts": "dev-dev as 1.0",
+		"themehybrid/hybrid-core": "dev-dev as 6.0",
+		"themehybrid/hybrid-filesystem": "dev-dev as 2.0",
+		"themehybrid/hybrid-tools": "dev-dev as 1.0"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/themehybrid/hybrid-core"
 		},
-		"files" : [
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-contracts"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-tools"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-filesystem"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-events"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Hybrid\\View\\": "src/"
+		},
+		"files": [
 			"src/functions-helpers.php"
 		]
-	},
-	"require"     : {
-		"php" : ">=5.6",
-                "themehybrid/hybrid-core"      : "^6.0",
-		"themehybrid/hybrid-contracts" : "^1.0",
-		"themehybrid/hybrid-template"  : "^1.0",
-		"themehybrid/hybrid-tools"     : "^1.0"
 	}
 }
