@@ -1,9 +1,9 @@
 {
 	"name": "themehybrid/hybrid-view",
-	"description": "System for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
+	"description": "The Views package.",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
-		"wordpress"
+		"php"
 	],
 	"authors": [
 		{
@@ -19,12 +19,34 @@
 		"forum": "https://themehybrid.com/board/forums/hybrid-core"
 	},
 	"require": {
-		"php": ">=7.4",
-		"themehybrid/hybrid-contracts": "^1.0",
-		"themehybrid/hybrid-core": "^6.0",
-		"themehybrid/hybrid-template": "^1.0",
-		"themehybrid/hybrid-tools": "^1.0"
+		"php": ">=8.0",
+		"themehybrid/hybrid-contracts": "dev-dev as 1.0",
+		"themehybrid/hybrid-core": "dev-dev as 6.0",
+		"themehybrid/hybrid-filesystem": "dev-dev as 2.0",
+		"themehybrid/hybrid-tools": "dev-dev as 1.0"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/themehybrid/hybrid-core"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-contracts"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-tools"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-filesystem"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/saas786/hybrid-events"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"Hybrid\\View\\": "src/"
