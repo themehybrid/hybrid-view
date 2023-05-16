@@ -22,7 +22,7 @@
 		"php": ">=8.0",
 		"themehybrid/hybrid-contracts": "dev-dev as 1.0",
 		"themehybrid/hybrid-core": "dev-dev as 6.0",
-		"themehybrid/hybrid-filesystem": "dev-dev as 2.0",
+		"themehybrid/hybrid-filesystem": "dev-dev as 1.0",
 		"themehybrid/hybrid-tools": "dev-dev as 1.0"
 	},
 	"repositories": [
