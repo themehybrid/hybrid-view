@@ -2,6 +2,14 @@
 
 You can see the changes made via the [commit log](https://github.com/themehybrid/hybrid-view/commits/master) for the latest release.
 
+## [2.0.0-alpha.2] - 2023-06-08
+
+### Changed
+
+- Bump dependencies to none dev versions.
+- Bump PHP to >=8.0
+- lint php files
+
 ## [2.0.0-alpha.1] - 2023-02-01
 
 ### Added
