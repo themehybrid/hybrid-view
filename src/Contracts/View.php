@@ -6,7 +6,7 @@
  * should be to find a template file and render or display the output.
  *
  * @package   HybridCore
- * @link      https://themehybrid.com/hybrid-core
+ * @link      https://github.com/themehybrid/hybrid-view
  *
  * @author    Justin Tadlock <justintadlock@gmail.com>
  * @copyright Copyright (c) 2008 - 2021, Justin Tadlock
