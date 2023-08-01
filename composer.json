@@ -1,34 +1,36 @@
 {
-	"name"        : "themehybrid/hybrid-view",
-	"description" : "System for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
-	"keywords"    : [ "wordpress" ],
-	"homepage"    : "https://github.com/themehybrid/hybrid-view",
-	"license"     : "GPL-2.0-or-later",
-	"authors"     : [
+	"name": "themehybrid/hybrid-view",
+	"description": "System for setting up and rendering theme template files. Views are a bit like a suped-up version of the core WordPress get_template_part() function.",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress"
+	],
+	"authors": [
 		{
-			"name"     : "Theme Hybrid",
-			"email"    : "themehybrid@gmail.com",
-			"homepage" : "https://themehybrid.com",
-			"role"     : "Developer"
+			"name": "Theme Hybrid",
+			"email": "themehybrid@gmail.com",
+			"homepage": "https://themehybrid.com",
+			"role": "Developer"
 		}
 	],
-	"support"     : {
-		"issues" : "https://github.com/themehybrid/hybrid-view/issues",
-		"forum"  : "https://themehybrid.com/board/forums/hybrid-core"
+	"homepage": "https://github.com/themehybrid/hybrid-view",
+	"support": {
+		"issues": "https://github.com/themehybrid/hybrid-view/issues",
+		"forum": "https://themehybrid.com/board/forums/hybrid-core"
 	},
-	"autoload"    : {
-		"psr-4" : {
-			"Hybrid\\View\\" : "src/"
+	"require": {
+		"php": ">=7.4",
+		"themehybrid/hybrid-contracts": "^1.0",
+		"themehybrid/hybrid-core": "^6.0",
+		"themehybrid/hybrid-template": "^1.0",
+		"themehybrid/hybrid-tools": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Hybrid\\View\\": "src/"
 		},
-		"files" : [
+		"files": [
 			"src/functions-helpers.php"
 		]
-	},
-	"require"     : {
-		"php" : ">=7.4",
-                "themehybrid/hybrid-core"      : "^6.0",
-		"themehybrid/hybrid-contracts" : "^1.0",
-		"themehybrid/hybrid-template"  : "^1.0",
-		"themehybrid/hybrid-tools"     : "^1.0"
 	}
 }
