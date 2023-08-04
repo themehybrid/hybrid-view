@@ -15,7 +15,6 @@
 namespace Hybrid\View;
 
 use Hybrid\Contracts\View\Factory as ViewFactory;
-
 use function Hybrid\app;
 
 if ( ! function_exists( __NAMESPACE__ . '\\view' ) ) {

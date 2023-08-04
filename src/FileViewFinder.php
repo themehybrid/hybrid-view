@@ -37,19 +37,18 @@ class FileViewFinder implements ViewFinderInterface {
     /**
      * Register a view extension with the finder.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $extensions = [ 'php', 'css', 'html' ];
 
     /**
      * Create a new file view loader instance.
      *
-     * @param  \Hybrid\Filesystem\Filesystem $files
-     * @param  array                         $paths
-     * @param  array|null                    $extensions
+     * @param  array      $paths
+     * @param  array|null $extensions
      * @return void
      */
-    public function __construct( Filesystem $files, array $paths, array $extensions = null ) {
+    public function __construct( Filesystem $files, array $paths, ?array $extensions = null ) {
         $this->files = $files;
         $this->paths = array_map( [ $this, 'resolvePath' ], $paths );
 

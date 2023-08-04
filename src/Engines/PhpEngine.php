@@ -17,7 +17,6 @@ class PhpEngine implements Engine {
     /**
      * Create a new file engine instance.
      *
-     * @param  \Hybrid\Filesystem\Filesystem $files
      * @return void
      */
     public function __construct( Filesystem $files ) {
@@ -62,8 +61,7 @@ class PhpEngine implements Engine {
     /**
      * Handle a view exception.
      *
-     * @param  \Throwable $e
-     * @param  int        $obLevel
+     * @param  int $obLevel
      * @return void
      * @throws \Throwable
      */

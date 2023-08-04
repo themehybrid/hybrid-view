@@ -45,11 +45,10 @@ abstract class Compiler {
     /**
      * Create a new compiler instance.
      *
-     * @param  \Hybrid\Filesystem\Filesystem $files
-     * @param  string                        $cachePath
-     * @param  string                        $basePath
-     * @param  bool                          $shouldCache
-     * @param  string                        $compiledExtension
+     * @param  string $cachePath
+     * @param  string $basePath
+     * @param  bool   $shouldCache
+     * @param  string $compiledExtension
      * @return void
      * @throws \InvalidArgumentException
      */
@@ -58,7 +57,7 @@ abstract class Compiler {
         $cachePath,
         $basePath = '',
         $shouldCache = true,
-        $compiledExtension = 'php' ) {
+        $compiledExtension = 'php') {
 
         if ( ! $cachePath ) {
             throw new \InvalidArgumentException( 'Please provide a valid cache path.' );
@@ -102,7 +101,7 @@ abstract class Compiler {
         }
 
         return $this->files->lastModified( $path ) >=
-               $this->files->lastModified( $compiled );
+                $this->files->lastModified( $compiled );
     }
 
     /**

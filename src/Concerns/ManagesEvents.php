@@ -73,7 +73,9 @@ trait ManagesEvents {
             $this->addEventListener( $prefix . $view, $callback );
 
             return $callback;
-        } elseif ( is_string( $callback ) ) {
+        }
+
+        if ( is_string( $callback ) ) {
             return $this->addClassEvent( $view, $callback, $prefix );
         }
     }
@@ -154,7 +156,6 @@ trait ManagesEvents {
     /**
      * Call the composer for a given view.
      *
-     * @param  \Hybrid\Contracts\View\View $view
      * @return void
      */
     public function callComposer( ViewContract $view ) {
@@ -164,7 +165,6 @@ trait ManagesEvents {
     /**
      * Call the creator for a given view.
      *
-     * @param  \Hybrid\Contracts\View\View $view
      * @return void
      */
     public function callCreator( ViewContract $view ) {

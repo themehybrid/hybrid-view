@@ -58,11 +58,9 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Create a new view instance.
      *
-     * @param  \Hybrid\View\Factory          $factory
-     * @param  \Hybrid\Contracts\View\Engine $engine
-     * @param  string                        $view
-     * @param  string                        $path
-     * @param  mixed                         $data
+     * @param  string $view
+     * @param  string $path
+     * @param  mixed  $data
      * @return void
      */
     public function __construct( Factory $factory, Engine $engine, $view, $path, $data = [] ) {
@@ -77,11 +75,10 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Get the string contents of the view.
      *
-     * @param  callable|null $callback
      * @return string
      * @throws \Throwable
      */
-    public function render( callable $callback = null ) {
+    public function render( ?callable $callback = null ) {
         try {
             $contents = $this->renderContents();
 
@@ -103,11 +100,10 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Display the string contents of the view.
      *
-     * @param  callable|null $callback
      * @return void
      * @throws \Throwable
      */
-    public function display( callable $callback = null ) {
+    public function display( ?callable $callback = null ) {
         echo $this->render( $callback );
     }
 
@@ -292,7 +288,6 @@ class View implements ArrayAccess, Htmlable, ViewContract {
      * Determine if a piece of data is bound.
      *
      * @param  string $key
-     * @return bool
      */
     public function offsetExists( $key ): bool {
         return array_key_exists( $key, $this->data );
@@ -302,7 +297,6 @@ class View implements ArrayAccess, Htmlable, ViewContract {
      * Get a piece of bound data to the view.
      *
      * @param  string $key
-     * @return mixed
      */
     public function offsetGet( $key ): mixed {
         return $this->data[ $key ];
@@ -313,7 +307,6 @@ class View implements ArrayAccess, Htmlable, ViewContract {
      *
      * @param  string $key
      * @param  mixed  $value
-     * @return void
      */
     public function offsetSet( $key, $value ): void {
         $this->with( $key, $value );
@@ -323,7 +316,6 @@ class View implements ArrayAccess, Htmlable, ViewContract {
      * Unset a piece of data from the view.
      *
      * @param  string $key
-     * @return void
      */
     public function offsetUnset( $key ): void {
         unset( $this->data[ $key ] );

@@ -6,8 +6,6 @@ interface ViewFinderInterface {
 
     /**
      * Hint path delimiter value.
-     *
-     * @var string
      */
     const HINT_PATH_DELIMITER = '::';
 

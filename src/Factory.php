@@ -9,7 +9,6 @@ use Hybrid\Contracts\View\Factory as FactoryContract;
 use Hybrid\Tools\Arr;
 use Hybrid\Tools\Traits\Macroable;
 use Hybrid\View\Engines\EngineResolver;
-
 use function Hybrid\Tools\tap;
 
 class Factory implements FactoryContract {
@@ -58,9 +57,9 @@ class Factory implements FactoryContract {
      * @var array
      */
     protected $extensions = [
-        'php'  => 'php',
         'css'  => 'file',
         'html' => 'file',
+        'php'  => 'php',
     ];
 
     /**
@@ -87,9 +86,6 @@ class Factory implements FactoryContract {
     /**
      * Create a new view factory instance.
      *
-     * @param  \Hybrid\View\Engines\EngineResolver $engines
-     * @param  \Hybrid\View\ViewFinderInterface    $finder
-     * @param  \Hybrid\Contracts\Events\Dispatcher $events
      * @return void
      */
     public function __construct( EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events ) {
@@ -207,8 +203,8 @@ class Factory implements FactoryContract {
             foreach ( $data as $key => $value ) {
                 $result .= $this->make(
                     $view, [
-                        'key'     => $key,
                         $iterator => $value,
+                        'key'     => $key,
                     ]
                 )->render();
             }
@@ -267,7 +263,7 @@ class Factory implements FactoryContract {
     public function exists( $view ) {
         try {
             $this->finder->find( $view );
-        } catch ( \InvalidArgumentException $e ) {
+        } catch ( \InvalidArgumentException ) {
             return false;
         }
 
@@ -326,7 +322,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function incrementRender() {
-        $this->renderCount++;
+        ++$this->renderCount;
     }
 
     /**
@@ -335,7 +331,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function decrementRender() {
-        $this->renderCount--;
+        --$this->renderCount;
     }
 
     /**
@@ -350,7 +346,6 @@ class Factory implements FactoryContract {
     /**
      * Determine if the given once token has been rendered.
      *
-     * @param  string $id
      * @return bool
      */
     public function hasRenderedOnce( string $id ) {
@@ -360,7 +355,6 @@ class Factory implements FactoryContract {
     /**
      * Mark the given once token as having been rendered.
      *
-     * @param  string $id
      * @return void
      */
     public function markAsRenderedOnce( string $id ) {
@@ -487,7 +481,6 @@ class Factory implements FactoryContract {
     /**
      * Set the view finder instance.
      *
-     * @param  \Hybrid\View\ViewFinderInterface $finder
      * @return void
      */
     public function setFinder( ViewFinderInterface $finder ) {
@@ -515,7 +508,6 @@ class Factory implements FactoryContract {
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Hybrid\Contracts\Events\Dispatcher $events
      * @return void
      */
     public function setDispatcher( Dispatcher $events ) {
@@ -534,7 +526,6 @@ class Factory implements FactoryContract {
     /**
      * Set the IoC container instance.
      *
-     * @param  \Hybrid\Contracts\Container\Container $container
      * @return void
      */
     public function setContainer( Container $container ) {
