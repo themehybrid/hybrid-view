@@ -2,6 +2,7 @@
 
 namespace Hybrid\View\Compilers;
 
+use ErrorException;
 use Hybrid\Filesystem\Filesystem;
 use Hybrid\Tools\Str;
 
@@ -53,12 +54,12 @@ abstract class Compiler {
      * @throws \InvalidArgumentException
      */
     public function __construct(
-        Filesystem $files,
-        $cachePath,
-        $basePath = '',
-        $shouldCache = true,
-        $compiledExtension = 'php') {
-
+		Filesystem $files,
+		$cachePath,
+		$basePath = '',
+		$shouldCache = true,
+		$compiledExtension = 'php'
+	) {
         if ( ! $cachePath ) {
             throw new \InvalidArgumentException( 'Please provide a valid cache path.' );
         }
@@ -77,7 +78,7 @@ abstract class Compiler {
      * @return string
      */
     public function getCompiledPath( $path ) {
-        return $this->cachePath . '/' . sha1( 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
+        return $this->cachePath . '/' . hash( 'xxh128', 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
     }
 
     /**
@@ -85,6 +86,7 @@ abstract class Compiler {
      *
      * @param  string $path
      * @return bool
+     * @throws \ErrorException
      */
     public function isExpired( $path ) {
         if ( ! $this->shouldCache ) {
@@ -100,8 +102,15 @@ abstract class Compiler {
             return true;
         }
 
-        return $this->files->lastModified( $path ) >=
-                $this->files->lastModified( $compiled );
+        try {
+            return $this->files->lastModified( $path ) >= $this->files->lastModified( $compiled );
+        } catch ( ErrorException $exception ) {
+            if ( ! $this->files->exists( $compiled ) ) {
+                return true;
+            }
+
+            throw $exception;
+        }
     }
 
     /**
