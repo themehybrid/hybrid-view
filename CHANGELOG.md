@@ -2,6 +2,13 @@
 
 You can see the changes made via the [commit log](https://github.com/themehybrid/hybrid-view/commits/master) for the latest release.
 
+## [2.0.1] - 2023-11-07
+
+### Changed
+
+* sync with https://github.com/illuminate/view/releases/tag/v10.25.1
+* sync with https://github.com/illuminate/support/releases/tag/v10.25.1
+
 ## [2.0.0] - 2023-08-23
 
 ## [2.0.0-alpha.2] - 2023-06-08
