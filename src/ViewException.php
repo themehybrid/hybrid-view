@@ -6,7 +6,6 @@ use Hybrid\Container\Container;
 use Hybrid\Tools\Reflector;
 
 class ViewException extends \ErrorException {
-
     /**
      * Report the exception.
      *
@@ -34,5 +33,4 @@ class ViewException extends \ErrorException {
             return $exception->render();
         }
     }
-
 }

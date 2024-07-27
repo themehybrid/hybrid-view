@@ -6,7 +6,6 @@ use Hybrid\Contracts\View\Engine;
 use Hybrid\Filesystem\Filesystem;
 
 class PhpEngine implements Engine {
-
     /**
      * The filesystem instance.
      *
@@ -17,6 +16,7 @@ class PhpEngine implements Engine {
     /**
      * Create a new file engine instance.
      *
+     * @param \Hybrid\Filesystem\Filesystem $files
      * @return void
      */
     public function __construct( Filesystem $files ) {
@@ -26,8 +26,8 @@ class PhpEngine implements Engine {
     /**
      * Get the evaluated contents of the view.
      *
-     * @param  string $path
-     * @param  array  $data
+     * @param string $path
+     * @param array $data
      * @return string
      */
     public function get( $path, array $data = [] ) {
@@ -37,8 +37,8 @@ class PhpEngine implements Engine {
     /**
      * Get the evaluated contents of the view at the given path.
      *
-     * @param  string $path
-     * @param  array  $data
+     * @param string $path
+     * @param array $data
      * @return string
      */
     protected function evaluatePath( $path, $data ) {
@@ -61,8 +61,10 @@ class PhpEngine implements Engine {
     /**
      * Handle a view exception.
      *
-     * @param  int $obLevel
+     * @param \Throwable $e
+     * @param int $obLevel
      * @return void
+     *
      * @throws \Throwable
      */
     protected function handleViewException( \Throwable $e, $obLevel ) {
@@ -72,5 +74,4 @@ class PhpEngine implements Engine {
 
         throw $e;
     }
-
 }
