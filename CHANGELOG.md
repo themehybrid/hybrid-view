@@ -2,12 +2,25 @@
 
 You can see the changes made via the [commit log](https://github.com/themehybrid/hybrid-view/commits/master) for the latest release.
 
+## [2.0.2] - 2024-08-01
+
+### Changed
+
+- sync with https://github.com/illuminate/view/releases/tag/v11.18.1
+- sync with https://github.com/illuminate/support/releases/tag/v11.18.1
+- sync with https://github.com/laravel/framework/releases/tag/v11.18.1
+- Add composer minimum-stability to "dev"
+- Add composer prefer-stable to true
+- Add composer sort-packages configuration
+- Update copyright date
+- Update lint php
+
 ## [2.0.1] - 2023-11-07
 
 ### Changed
 
-* sync with https://github.com/illuminate/view/releases/tag/v10.25.1
-* sync with https://github.com/illuminate/support/releases/tag/v10.25.1
+- sync with https://github.com/illuminate/view/releases/tag/v10.25.1
+- sync with https://github.com/illuminate/support/releases/tag/v10.25.1
 
 ## [2.0.0] - 2023-08-23
 
