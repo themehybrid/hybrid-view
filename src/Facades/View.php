@@ -39,7 +39,7 @@ use Hybrid\Core\Facades\Facade;
  * @method static void setContainer(\Hybrid\Contracts\Container\Container $container)
  * @method static mixed shared(string $key, mixed $default = null)
  * @method static array getShared()
- * @method static void macro(string $name, object|callable $macro)
+ * @method static void macro(string $name, object|callable $macro, object|callable $macro = null)
  * @method static void mixin(object $mixin, bool $replace = true)
  * @method static bool hasMacro(string $name)
  * @method static void flushMacros()

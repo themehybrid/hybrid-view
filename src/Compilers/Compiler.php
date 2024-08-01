@@ -2,7 +2,6 @@
 
 namespace Hybrid\View\Compilers;
 
-use ErrorException;
 use Hybrid\Filesystem\Filesystem;
 use Hybrid\Tools\Str;
 
@@ -46,20 +45,21 @@ abstract class Compiler {
     /**
      * Create a new compiler instance.
      *
-     * @param  string $cachePath
-     * @param  string $basePath
-     * @param  bool   $shouldCache
-     * @param  string $compiledExtension
+     * @param \Hybrid\Filesystem\Filesystem $files
+     * @param string                        $cachePath
+     * @param string                        $basePath
+     * @param bool                          $shouldCache
+     * @param string                        $compiledExtension
      * @return void
      * @throws \InvalidArgumentException
      */
     public function __construct(
-		Filesystem $files,
-		$cachePath,
-		$basePath = '',
-		$shouldCache = true,
-		$compiledExtension = 'php'
-	) {
+        Filesystem $files,
+        $cachePath,
+        $basePath = '',
+        $shouldCache = true,
+        $compiledExtension = 'php'
+    ) {
         if ( ! $cachePath ) {
             throw new \InvalidArgumentException( 'Please provide a valid cache path.' );
         }
@@ -74,17 +74,23 @@ abstract class Compiler {
     /**
      * Get the path to the compiled version of a view.
      *
-     * @param  string $path
+     * @param string $path
      * @return string
      */
     public function getCompiledPath( $path ) {
-        return $this->cachePath . '/' . hash( 'xxh128', 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
+        // Note: Downgraded it to ensure PHP 8.0 compatibility,
+        // as the `xxh128` algo is available in versions >=8.1.
+        // Thus, utilizing `md5` instead.
+        // @see https://www.php.net/manual/en/function.hash-algos.php
+        // @see https://github.com/laravel/framework/discussions/46074
+        // @see \Rector\Tests\DowngradePhp81\Rector\FuncCall\DowngradeHashAlgorithmXxHash\DowngradeHashAlgorithmXxHashRectorTest
+        return $this->cachePath . '/' . hash( 'md5', 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
     }
 
     /**
      * Determine if the view at the given path is expired.
      *
-     * @param  string $path
+     * @param string $path
      * @return bool
      * @throws \ErrorException
      */
@@ -104,7 +110,7 @@ abstract class Compiler {
 
         try {
             return $this->files->lastModified( $path ) >= $this->files->lastModified( $compiled );
-        } catch ( ErrorException $exception ) {
+        } catch ( \ErrorException $exception ) {
             if ( ! $this->files->exists( $compiled ) ) {
                 return true;
             }
@@ -116,7 +122,7 @@ abstract class Compiler {
     /**
      * Create the compiled file directory if necessary.
      *
-     * @param  string $path
+     * @param string $path
      * @return void
      */
     protected function ensureCompiledDirectoryExists( $path ) {

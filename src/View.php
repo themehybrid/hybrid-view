@@ -13,8 +13,9 @@ use Hybrid\Tools\MessageBag;
 use Hybrid\Tools\Str;
 use Hybrid\Tools\Traits\Macroable;
 use Hybrid\Tools\ViewErrorBag;
+use Stringable;
 
-class View implements ArrayAccess, Htmlable, ViewContract {
+class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
 
     use Macroable {
         __call as macroCall;
@@ -58,9 +59,11 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Create a new view instance.
      *
-     * @param  string $view
-     * @param  string $path
-     * @param  mixed  $data
+     * @param \Hybrid\View\Factory          $factory
+     * @param \Hybrid\Contracts\View\Engine $engine
+     * @param string                        $view
+     * @param string                        $path
+     * @param mixed                         $data
      * @return void
      */
     public function __construct( Factory $factory, Engine $engine, $view, $path, $data = [] ) {
@@ -75,6 +78,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Get the string contents of the view.
      *
+     * @param callable|null $callback
      * @return string
      * @throws \Throwable
      */
@@ -169,8 +173,8 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Add a piece of data to the view.
      *
-     * @param  string|array $key
-     * @param  mixed        $value
+     * @param string|array $key
+     * @param mixed        $value
      * @return $this
      */
     public function with( $key, $value = null ) {
@@ -186,9 +190,9 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Add a view instance to the view data.
      *
-     * @param  string $key
-     * @param  string $view
-     * @param  array  $data
+     * @param string $key
+     * @param string $view
+     * @param array  $data
      * @return $this
      */
     public function nest( $key, $view, array $data = [] ) {
@@ -198,20 +202,20 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Add validation errors to the view.
      *
-     * @param  \Hybrid\Contracts\MessageProvider|array $provider
-     * @param  string                                  $bag
+     * @param \Hybrid\Contracts\MessageProvider|array $provider
+     * @param string                                  $bag
      * @return $this
      */
     public function withErrors( $provider, $bag = 'default' ) {
-        return $this->with('errors', ( new ViewErrorBag() )->put(
+        return $this->with( 'errors', ( new ViewErrorBag() )->put(
             $bag, $this->formatErrors( $provider )
-        ));
+        ) );
     }
 
     /**
      * Parse the given errors into an appropriate value.
      *
-     * @param  \Hybrid\Contracts\MessageProvider|array|string $provider
+     * @param \Hybrid\Contracts\MessageProvider|array|string $provider
      * @return \Hybrid\Tools\MessageBag
      */
     protected function formatErrors( $provider ) {
@@ -259,7 +263,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Set the path to the view.
      *
-     * @param  string $path
+     * @param string $path
      * @return void
      */
     public function setPath( $path ) {
@@ -287,7 +291,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Determine if a piece of data is bound.
      *
-     * @param  string $key
+     * @param string $key
      */
     public function offsetExists( $key ): bool {
         return array_key_exists( $key, $this->data );
@@ -296,7 +300,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Get a piece of bound data to the view.
      *
-     * @param  string $key
+     * @param string $key
      */
     public function offsetGet( $key ): mixed {
         return $this->data[ $key ];
@@ -305,8 +309,8 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Set a piece of data on the view.
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      */
     public function offsetSet( $key, $value ): void {
         $this->with( $key, $value );
@@ -315,7 +319,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Unset a piece of data from the view.
      *
-     * @param  string $key
+     * @param string $key
      */
     public function offsetUnset( $key ): void {
         unset( $this->data[ $key ] );
@@ -324,7 +328,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Get a piece of data from the view.
      *
-     * @param  string $key
+     * @param string $key
      * @return mixed
      */
     public function &__get( $key ) {
@@ -334,8 +338,8 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Set a piece of data on the view.
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      * @return void
      */
     public function __set( $key, $value ) {
@@ -345,7 +349,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Check if a piece of data is bound to the view.
      *
-     * @param  string $key
+     * @param string $key
      * @return bool
      */
     public function __isset( $key ) {
@@ -355,7 +359,7 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Remove a piece of bound data from the view.
      *
-     * @param  string $key
+     * @param string $key
      * @return void
      */
     public function __unset( $key ) {
@@ -365,8 +369,8 @@ class View implements ArrayAccess, Htmlable, ViewContract {
     /**
      * Dynamically bind parameters to the view.
      *
-     * @param  string $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array  $parameters
      * @return \Hybrid\View\View
      * @throws \BadMethodCallException
      */
@@ -376,9 +380,9 @@ class View implements ArrayAccess, Htmlable, ViewContract {
         }
 
         if ( ! str_starts_with( $method, 'with' ) ) {
-            throw new \BadMethodCallException(sprintf(
+            throw new \BadMethodCallException( sprintf(
                 'Method %s::%s does not exist.', static::class, $method
-            ));
+            ) );
         }
 
         return $this->with( Str::camel( substr( $method, 4 ) ), $parameters[0] );
