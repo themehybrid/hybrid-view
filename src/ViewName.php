@@ -3,6 +3,7 @@
 namespace Hybrid\View;
 
 class ViewName {
+
     /**
      * Normalize the given view name.
      *
@@ -20,4 +21,5 @@ class ViewName {
 
         return $namespace . $delimiter . str_replace( '/', '.', $name );
     }
+
 }

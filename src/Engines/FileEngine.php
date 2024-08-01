@@ -6,6 +6,7 @@ use Hybrid\Contracts\View\Engine;
 use Hybrid\Filesystem\Filesystem;
 
 class FileEngine implements Engine {
+
     /**
      * The filesystem instance.
      *
@@ -26,10 +27,11 @@ class FileEngine implements Engine {
      * Get the evaluated contents of the view.
      *
      * @param string $path
-     * @param array $data
+     * @param array  $data
      * @return string
      */
     public function get( $path, array $data = [] ) {
         return $this->files->get( $path );
     }
+
 }

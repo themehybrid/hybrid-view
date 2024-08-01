@@ -6,6 +6,7 @@ use Hybrid\Filesystem\Filesystem;
 use Hybrid\Tools\Str;
 
 abstract class Compiler {
+
     /**
      * The filesystem instance.
      *
@@ -45,12 +46,11 @@ abstract class Compiler {
      * Create a new compiler instance.
      *
      * @param \Hybrid\Filesystem\Filesystem $files
-     * @param string $cachePath
-     * @param string $basePath
-     * @param bool $shouldCache
-     * @param string $compiledExtension
+     * @param string                        $cachePath
+     * @param string                        $basePath
+     * @param bool                          $shouldCache
+     * @param string                        $compiledExtension
      * @return void
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(
@@ -92,7 +92,6 @@ abstract class Compiler {
      *
      * @param string $path
      * @return bool
-     *
      * @throws \ErrorException
      */
     public function isExpired( $path ) {
@@ -131,4 +130,5 @@ abstract class Compiler {
             $this->files->makeDirectory( dirname( $path ), 0777, true, true );
         }
     }
+
 }

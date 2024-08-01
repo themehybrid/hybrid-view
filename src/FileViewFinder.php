@@ -5,6 +5,7 @@ namespace Hybrid\View;
 use Hybrid\Filesystem\Filesystem;
 
 class FileViewFinder implements ViewFinderInterface {
+
     /**
      * The filesystem instance.
      *
@@ -44,8 +45,8 @@ class FileViewFinder implements ViewFinderInterface {
      * Create a new file view loader instance.
      *
      * @param \Hybrid\Filesystem\Filesystem $files
-     * @param array $paths
-     * @param array|null $extensions
+     * @param array                         $paths
+     * @param array|null                    $extensions
      * @return void
      */
     public function __construct( Filesystem $files, array $paths, ?array $extensions = null ) {
@@ -92,7 +93,6 @@ class FileViewFinder implements ViewFinderInterface {
      *
      * @param string $name
      * @return array
-     *
      * @throws \InvalidArgumentException
      */
     protected function parseNamespaceSegments( $name ) {
@@ -113,9 +113,8 @@ class FileViewFinder implements ViewFinderInterface {
      * Find the given view in the list of paths.
      *
      * @param string $name
-     * @param array $paths
+     * @param array  $paths
      * @return string
-     *
      * @throws \InvalidArgumentException
      */
     protected function findInPaths( $name, $paths ) {
@@ -175,7 +174,7 @@ class FileViewFinder implements ViewFinderInterface {
     /**
      * Add a namespace hint to the finder.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -192,7 +191,7 @@ class FileViewFinder implements ViewFinderInterface {
     /**
      * Prepend a namespace hint to the finder.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -209,7 +208,7 @@ class FileViewFinder implements ViewFinderInterface {
     /**
      * Replace the namespace hints for the given namespace.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -306,4 +305,5 @@ class FileViewFinder implements ViewFinderInterface {
     public function getExtensions() {
         return $this->extensions;
     }
+
 }

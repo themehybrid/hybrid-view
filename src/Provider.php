@@ -9,6 +9,7 @@ use Hybrid\View\Engines\FileEngine;
 use Hybrid\View\Engines\PhpEngine;
 
 class Provider extends ServiceProvider {
+
     /**
      * Register the service provider.
      *
@@ -59,7 +60,7 @@ class Provider extends ServiceProvider {
      * Create a new Factory Instance.
      *
      * @param \Hybrid\View\Engines\EngineResolver $resolver
-     * @param \Hybrid\View\ViewFinderInterface $finder
+     * @param \Hybrid\View\ViewFinderInterface    $finder
      * @param \Hybrid\Contracts\Events\Dispatcher $events
      * @return \Hybrid\View\Factory
      */
@@ -83,7 +84,7 @@ class Provider extends ServiceProvider {
      */
     public function registerEngineResolver() {
         $this->app->singleton( 'view.engine.resolver', function () {
-            $resolver = new EngineResolver;
+            $resolver = new EngineResolver();
 
             // Next, we will register the various view engines with the resolver so that the
             // environment will resolve the engines needed for various views based on the
@@ -115,4 +116,5 @@ class Provider extends ServiceProvider {
     public function registerPhpEngine( $resolver ) {
         $resolver->register( 'php', static fn() => new PhpEngine( Container::getInstance()->make( 'files' ) ) );
     }
+
 }

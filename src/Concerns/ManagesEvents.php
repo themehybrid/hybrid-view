@@ -7,10 +7,11 @@ use Hybrid\Contracts\View\View as ViewContract;
 use Hybrid\Tools\Str;
 
 trait ManagesEvents {
+
     /**
      * Register a view creator event.
      *
-     * @param array|string $views
+     * @param array|string    $views
      * @param \Closure|string $callback
      * @return array
      */
@@ -43,7 +44,7 @@ trait ManagesEvents {
     /**
      * Register a view composer event.
      *
-     * @param array|string $views
+     * @param array|string    $views
      * @param \Closure|string $callback
      * @return array
      */
@@ -60,9 +61,9 @@ trait ManagesEvents {
     /**
      * Add an event for a given view.
      *
-     * @param string $view
+     * @param string          $view
      * @param \Closure|string $callback
-     * @param string $prefix
+     * @param string          $prefix
      * @return \Closure|null
      */
     protected function addViewEvent( $view, $callback, $prefix = 'composing: ' ) {
@@ -140,7 +141,7 @@ trait ManagesEvents {
     /**
      * Add a listener to the event dispatcher.
      *
-     * @param string $name
+     * @param string   $name
      * @param \Closure $callback
      * @return void
      */
@@ -175,4 +176,5 @@ trait ManagesEvents {
             $this->events->dispatch( $event, [ $view ] );
         }
     }
+
 }

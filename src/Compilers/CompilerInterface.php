@@ -3,6 +3,7 @@
 namespace Hybrid\View\Compilers;
 
 interface CompilerInterface {
+
     /**
      * Get the path to the compiled version of a view.
      *
@@ -26,4 +27,5 @@ interface CompilerInterface {
      * @return void
      */
     public function compile( $path );
+
 }

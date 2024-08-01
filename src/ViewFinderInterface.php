@@ -3,10 +3,9 @@
 namespace Hybrid\View;
 
 interface ViewFinderInterface {
+
     /**
      * Hint path delimiter value.
-     *
-     * @var string
      */
     const HINT_PATH_DELIMITER = '::';
 
@@ -29,7 +28,7 @@ interface ViewFinderInterface {
     /**
      * Add a namespace hint to the finder.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -38,7 +37,7 @@ interface ViewFinderInterface {
     /**
      * Prepend a namespace hint to the finder.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -47,7 +46,7 @@ interface ViewFinderInterface {
     /**
      * Replace the namespace hints for the given namespace.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return void
      */
@@ -67,4 +66,5 @@ interface ViewFinderInterface {
      * @return void
      */
     public function flush();
+
 }

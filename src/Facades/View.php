@@ -86,6 +86,7 @@ use Hybrid\Core\Facades\Facade;
  * @method static string renderTranslation()
  */
 class View extends Facade {
+
     /**
      * Get the registered name of the component.
      *
@@ -94,4 +95,5 @@ class View extends Facade {
     protected static function getFacadeAccessor() {
         return 'view';
     }
+
 }

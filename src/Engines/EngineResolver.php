@@ -5,6 +5,7 @@ namespace Hybrid\View\Engines;
 use Closure;
 
 class EngineResolver {
+
     /**
      * The array of engine resolvers.
      *
@@ -24,7 +25,7 @@ class EngineResolver {
      *
      * The engine string typically corresponds to a file extension.
      *
-     * @param string $engine
+     * @param string   $engine
      * @param \Closure $resolver
      * @return void
      */
@@ -39,7 +40,6 @@ class EngineResolver {
      *
      * @param string $engine
      * @return \Hybrid\Contracts\View\Engine
-     *
      * @throws \InvalidArgumentException
      */
     public function resolve( $engine ) {
@@ -63,4 +63,5 @@ class EngineResolver {
     public function forget( $engine ) {
         unset( $this->resolved[ $engine ] );
     }
+
 }

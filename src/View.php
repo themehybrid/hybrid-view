@@ -16,6 +16,7 @@ use Hybrid\Tools\ViewErrorBag;
 use Stringable;
 
 class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
+
     use Macroable {
         __call as macroCall;
     }
@@ -58,11 +59,11 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
     /**
      * Create a new view instance.
      *
-     * @param \Hybrid\View\Factory $factory
+     * @param \Hybrid\View\Factory          $factory
      * @param \Hybrid\Contracts\View\Engine $engine
-     * @param string $view
-     * @param string $path
-     * @param mixed $data
+     * @param string                        $view
+     * @param string                        $path
+     * @param mixed                         $data
      * @return void
      */
     public function __construct( Factory $factory, Engine $engine, $view, $path, $data = [] ) {
@@ -79,7 +80,6 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      *
      * @param callable|null $callback
      * @return string
-     *
      * @throws \Throwable
      */
     public function render( ?callable $callback = null ) {
@@ -105,7 +105,6 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Display the string contents of the view.
      *
      * @return void
-     *
      * @throws \Throwable
      */
     public function display( ?callable $callback = null ) {
@@ -165,7 +164,6 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Get the sections of the rendered view.
      *
      * @return array
-     *
      * @throws \Throwable
      */
     public function renderSections() {
@@ -176,7 +174,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Add a piece of data to the view.
      *
      * @param string|array $key
-     * @param mixed $value
+     * @param mixed        $value
      * @return $this
      */
     public function with( $key, $value = null ) {
@@ -194,7 +192,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      *
      * @param string $key
      * @param string $view
-     * @param array $data
+     * @param array  $data
      * @return $this
      */
     public function nest( $key, $view, array $data = [] ) {
@@ -205,11 +203,11 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Add validation errors to the view.
      *
      * @param \Hybrid\Contracts\MessageProvider|array $provider
-     * @param string $bag
+     * @param string                                  $bag
      * @return $this
      */
     public function withErrors( $provider, $bag = 'default' ) {
-        return $this->with( 'errors', ( new ViewErrorBag )->put(
+        return $this->with( 'errors', ( new ViewErrorBag() )->put(
             $bag, $this->formatErrors( $provider )
         ) );
     }
@@ -312,7 +310,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Set a piece of data on the view.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet( $key, $value ): void {
         $this->with( $key, $value );
@@ -341,7 +339,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Set a piece of data on the view.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      * @return void
      */
     public function __set( $key, $value ) {
@@ -372,9 +370,8 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Dynamically bind parameters to the view.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
      * @return \Hybrid\View\View
-     *
      * @throws \BadMethodCallException
      */
     public function __call( $method, $parameters ) {
@@ -404,10 +401,10 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Get the string contents of the view.
      *
      * @return string
-     *
      * @throws \Throwable
      */
     public function __toString() {
         return $this->render();
     }
+
 }

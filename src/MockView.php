@@ -6,6 +6,7 @@ use Hybrid\Contracts\Arrayable;
 use Hybrid\Contracts\View\View as ViewContract;
 
 class MockView implements ViewContract {
+
     public function __construct( $view, $path, $data = [] ) {
         $this->view = $view;
         $this->path = $path;
@@ -40,4 +41,5 @@ class MockView implements ViewContract {
     public function toHtml() {
         return $this->render();
     }
+
 }

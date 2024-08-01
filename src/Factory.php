@@ -12,6 +12,7 @@ use Hybrid\View\Engines\EngineResolver;
 use function Hybrid\Tools\tap;
 
 class Factory implements FactoryContract {
+
     use Concerns\ManagesEvents;
     use Macroable;
 
@@ -100,7 +101,7 @@ class Factory implements FactoryContract {
      * Create a new view factory instance.
      *
      * @param \Hybrid\View\Engines\EngineResolver $engines
-     * @param \Hybrid\View\ViewFinderInterface $finder
+     * @param \Hybrid\View\ViewFinderInterface    $finder
      * @param \Hybrid\Contracts\Events\Dispatcher $events
      * @return void
      */
@@ -115,9 +116,9 @@ class Factory implements FactoryContract {
     /**
      * Get the evaluated view contents for the given view.
      *
-     * @param string $path
+     * @param string                            $path
      * @param \Hybrid\Contracts\Arrayable|array $data
-     * @param array $mergeData
+     * @param array                             $mergeData
      * @return \Hybrid\Contracts\View\View
      */
     public function file( $path, $data = [], $mergeData = [] ) {
@@ -131,9 +132,9 @@ class Factory implements FactoryContract {
     /**
      * Get the evaluated view contents for the given view.
      *
-     * @param string $view
+     * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
-     * @param array $mergeData
+     * @param array                             $mergeData
      * @return \Hybrid\Contracts\View\View
      */
     public function make( $view, $data = [], $mergeData = [] ) {
@@ -154,11 +155,10 @@ class Factory implements FactoryContract {
     /**
      * Get the first view that actually exists from the given list.
      *
-     * @param array $views
+     * @param array                             $views
      * @param \Hybrid\Contracts\Arrayable|array $data
-     * @param array $mergeData
+     * @param array                             $mergeData
      * @return \Hybrid\Contracts\View\View
-     *
      * @throws \InvalidArgumentException
      */
     public function first( array $views, $data = [], $mergeData = [] ) {
@@ -174,10 +174,10 @@ class Factory implements FactoryContract {
     /**
      * Get the rendered content of the view based on a given condition.
      *
-     * @param bool $condition
-     * @param string $view
+     * @param bool                              $condition
+     * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
-     * @param array $mergeData
+     * @param array                             $mergeData
      * @return string
      */
     public function renderWhen( $condition, $view, $data = [], $mergeData = [] ) {
@@ -191,10 +191,10 @@ class Factory implements FactoryContract {
     /**
      * Get the rendered content of the view based on the negation of a given condition.
      *
-     * @param bool $condition
-     * @param string $view
+     * @param bool                              $condition
+     * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
-     * @param array $mergeData
+     * @param array                             $mergeData
      * @return string
      */
     public function renderUnless( $condition, $view, $data = [], $mergeData = [] ) {
@@ -205,7 +205,7 @@ class Factory implements FactoryContract {
      * Get the rendered contents of a partial from a loop.
      *
      * @param string $view
-     * @param array $data
+     * @param array  $data
      * @param string $iterator
      * @param string $empty
      * @return string
@@ -262,8 +262,8 @@ class Factory implements FactoryContract {
     /**
      * Create a new view instance from the given arguments.
      *
-     * @param string $view
-     * @param string $path
+     * @param string                            $view
+     * @param string                            $path
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @return \Hybrid\Contracts\View\View
      */
@@ -292,7 +292,6 @@ class Factory implements FactoryContract {
      *
      * @param string $path
      * @return \Hybrid\Contracts\View\Engine
-     *
      * @throws \InvalidArgumentException
      */
     public function getEngineFromPath( $path ) {
@@ -323,7 +322,7 @@ class Factory implements FactoryContract {
      * Add a piece of shared data to the environment.
      *
      * @param array|string $key
-     * @param mixed|null $value
+     * @param mixed|null   $value
      * @return mixed
      */
     public function share( $key, $value = null ) {
@@ -342,7 +341,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function incrementRender() {
-        $this->renderCount++;
+        ++$this->renderCount;
     }
 
     /**
@@ -351,7 +350,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function decrementRender() {
-        $this->renderCount--;
+        --$this->renderCount;
     }
 
     /**
@@ -394,7 +393,7 @@ class Factory implements FactoryContract {
     /**
      * Add a new namespace to the loader.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return $this
      */
@@ -407,7 +406,7 @@ class Factory implements FactoryContract {
     /**
      * Prepend a new namespace to the loader.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return $this
      */
@@ -420,7 +419,7 @@ class Factory implements FactoryContract {
     /**
      * Replace the namespace hints for the given namespace.
      *
-     * @param string $namespace
+     * @param string       $namespace
      * @param string|array $hints
      * @return $this
      */
@@ -433,8 +432,8 @@ class Factory implements FactoryContract {
     /**
      * Register a valid view extension and its engine.
      *
-     * @param string $extension
-     * @param string $engine
+     * @param string        $extension
+     * @param string        $engine
      * @param \Closure|null $resolver
      * @return void
      */
@@ -558,7 +557,7 @@ class Factory implements FactoryContract {
      * Get an item from the shared data.
      *
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      * @return mixed
      */
     public function shared( $key, $default = null ) {
@@ -573,4 +572,5 @@ class Factory implements FactoryContract {
     public function getShared() {
         return $this->shared;
     }
+
 }
