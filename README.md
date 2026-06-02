@@ -4,20 +4,21 @@ Hybrid View is PHP-based View package.
 
 ## Requirements
 
-* PHP 8.0+.
+* PHP 8.2+.
 * [Composer](https://getcomposer.org/) for managing PHP dependencies.
 
 ## Copyright and License
 
 This project is licensed under the [GNU GPL](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html), version 2 or later.
 
-2008&thinsp;&ndash;&thinsp;2023 &copy; [Theme Hybrid](https://themehybrid.com).
+2008&thinsp;&ndash;&thinsp;2026 &copy; [Theme Hybrid](https://themehybrid.com).
 
-## Other Licenses
+## Third-Party Licenses
 
-Hybrid View utilizes code from Illuminate.
+Hybrid View utilizes code from the illuminate/view package.
 
-https://github.com/illuminate/views
+Repository: <https://github.com/illuminate/view>
 
-License: MIT - https://opensource.org/licenses/MIT
+License: MIT License - <https://opensource.org/licenses/MIT>
+
 Copyright (c) Taylor Otwell

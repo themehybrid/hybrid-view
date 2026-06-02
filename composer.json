@@ -19,7 +19,7 @@
 		"forum": "https://themehybrid.com/board/forums/hybrid-core"
 	},
 	"require": {
-		"php": ">=8.0",
+		"php": ">=8.2",
 		"themehybrid/hybrid-contracts": "^2.0",
 		"themehybrid/hybrid-core": "^7.0",
 		"themehybrid/hybrid-filesystem": "^1.0",
