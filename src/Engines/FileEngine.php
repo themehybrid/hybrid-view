@@ -6,7 +6,6 @@ use Hybrid\Contracts\View\Engine;
 use Hybrid\Filesystem\Filesystem;
 
 class FileEngine implements Engine {
-
     /**
      * The filesystem instance.
      *
@@ -16,8 +15,6 @@ class FileEngine implements Engine {
 
     /**
      * Create a new file engine instance.
-     *
-     * @return void
      */
     public function __construct( Filesystem $files ) {
         $this->files = $files;
@@ -28,10 +25,10 @@ class FileEngine implements Engine {
      *
      * @param string $path
      * @param array  $data
+     *
      * @return string
      */
     public function get( $path, array $data = [] ) {
         return $this->files->get( $path );
     }
-
 }

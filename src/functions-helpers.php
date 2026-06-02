@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View template tags.
  *
@@ -15,19 +16,20 @@
 namespace Hybrid\View;
 
 use Hybrid\Contracts\View\Factory as ViewFactory;
+use Hybrid\Contracts\View\View as ViewContract;
 use function Hybrid\app;
 
 if ( ! function_exists( __NAMESPACE__ . '\\view' ) ) {
-
     /**
      * Get the evaluated view contents for the given view.
      *
      * @param string|null                       $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return ($view is null ? \Hybrid\Contracts\View\Factory : \Hybrid\Contracts\View\View)
      */
-    function view( $view = null, $data = [], $mergeData = [] ) {
+    function view( $view = null, $data = [], $mergeData = [] ): ViewFactory|ViewContract {
         $factory = app( ViewFactory::class );
 
         if ( func_num_args() === 0 ) {
@@ -39,13 +41,13 @@ if ( ! function_exists( __NAMESPACE__ . '\\view' ) ) {
 }
 
 if ( ! function_exists( __NAMESPACE__ . '\\display' ) ) {
-
     /**
      * Display the evaluated view contents for the given view.
      *
      * @param string|null                       $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return \Hybrid\Contracts\View\View|\Hybrid\Contracts\View\Factory
      */
     function display( $view = null, $data = [], $mergeData = [] ) {
@@ -61,6 +63,7 @@ if ( ! function_exists( __NAMESPACE__ . '\\render' ) ) {
      * @param string|null                       $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return \Hybrid\Contracts\View\View|\Hybrid\Contracts\View\Factory
      */
     function render( $view = null, $data = [], $mergeData = [] ) {

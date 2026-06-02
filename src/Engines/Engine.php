@@ -3,7 +3,6 @@
 namespace Hybrid\View\Engines;
 
 abstract class Engine {
-
     /**
      * The view that was last to be rendered.
      *
@@ -19,5 +18,4 @@ abstract class Engine {
     public function getLastRendered() {
         return $this->lastRendered;
     }
-
 }

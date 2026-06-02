@@ -2,11 +2,12 @@
 
 namespace Hybrid\View\Compilers;
 
+use ErrorException;
 use Hybrid\Filesystem\Filesystem;
 use Hybrid\Tools\Str;
+use InvalidArgumentException;
 
 abstract class Compiler {
-
     /**
      * The filesystem instance.
      *
@@ -43,14 +44,22 @@ abstract class Compiler {
     protected $compiledExtension = 'php';
 
     /**
+     * Indicates if view cache timestamps should be checked.
+     *
+     * @var bool
+     */
+    protected $shouldCheckTimestamps;
+
+    /**
      * Create a new compiler instance.
      *
      * @param \Hybrid\Filesystem\Filesystem $files
      * @param string                        $cachePath
      * @param string                        $basePath
      * @param bool                          $shouldCache
+     * @param bool                          $shouldCheckTimestamps
      * @param string                        $compiledExtension
-     * @return void
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(
@@ -58,40 +67,39 @@ abstract class Compiler {
         $cachePath,
         $basePath = '',
         $shouldCache = true,
-        $compiledExtension = 'php'
+        $compiledExtension = 'php',
+        $shouldCheckTimestamps = true
     ) {
         if ( ! $cachePath ) {
-            throw new \InvalidArgumentException( 'Please provide a valid cache path.' );
+            throw new InvalidArgumentException( 'Please provide a valid cache path.' );
         }
 
-        $this->files             = $files;
-        $this->cachePath         = $cachePath;
-        $this->basePath          = $basePath;
-        $this->shouldCache       = $shouldCache;
-        $this->compiledExtension = $compiledExtension;
+        $this->files                 = $files;
+        $this->cachePath             = $cachePath;
+        $this->basePath              = $basePath;
+        $this->shouldCache           = $shouldCache;
+        $this->compiledExtension     = $compiledExtension;
+        $this->shouldCheckTimestamps = $shouldCheckTimestamps;
     }
 
     /**
      * Get the path to the compiled version of a view.
      *
      * @param string $path
+     *
      * @return string
      */
     public function getCompiledPath( $path ) {
-        // Note: Downgraded it to ensure PHP 8.0 compatibility,
-        // as the `xxh128` algo is available in versions >=8.1.
-        // Thus, utilizing `md5` instead.
-        // @see https://www.php.net/manual/en/function.hash-algos.php
-        // @see https://github.com/laravel/framework/discussions/46074
-        // @see \Rector\Tests\DowngradePhp81\Rector\FuncCall\DowngradeHashAlgorithmXxHash\DowngradeHashAlgorithmXxHashRectorTest
-        return $this->cachePath . '/' . hash( 'md5', 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
+        return $this->cachePath . '/' . hash( 'xxh128', 'v2' . Str::after( $path, $this->basePath ) ) . '.' . $this->compiledExtension;
     }
 
     /**
      * Determine if the view at the given path is expired.
      *
      * @param string $path
+     *
      * @return bool
+     *
      * @throws \ErrorException
      */
     public function isExpired( $path ) {
@@ -108,9 +116,14 @@ abstract class Compiler {
             return true;
         }
 
+        if ( ! $this->shouldCheckTimestamps ) {
+            return false;
+        }
+
         try {
-            return $this->files->lastModified( $path ) >= $this->files->lastModified( $compiled );
-        } catch ( \ErrorException $exception ) {
+            return $this->files->lastModified( $path ) >=
+                $this->files->lastModified( $compiled );
+        } catch ( ErrorException $exception ) {
             if ( ! $this->files->exists( $compiled ) ) {
                 return true;
             }
@@ -123,6 +136,7 @@ abstract class Compiler {
      * Create the compiled file directory if necessary.
      *
      * @param string $path
+     *
      * @return void
      */
     protected function ensureCompiledDirectoryExists( $path ) {
@@ -130,5 +144,4 @@ abstract class Compiler {
             $this->files->makeDirectory( dirname( $path ), 0777, true, true );
         }
     }
-
 }

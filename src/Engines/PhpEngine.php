@@ -4,9 +4,9 @@ namespace Hybrid\View\Engines;
 
 use Hybrid\Contracts\View\Engine;
 use Hybrid\Filesystem\Filesystem;
+use Throwable;
 
 class PhpEngine implements Engine {
-
     /**
      * The filesystem instance.
      *
@@ -18,7 +18,6 @@ class PhpEngine implements Engine {
      * Create a new file engine instance.
      *
      * @param \Hybrid\Filesystem\Filesystem $files
-     * @return void
      */
     public function __construct( Filesystem $files ) {
         $this->files = $files;
@@ -29,6 +28,7 @@ class PhpEngine implements Engine {
      *
      * @param string $path
      * @param array  $data
+     *
      * @return string
      */
     public function get( $path, array $data = [] ) {
@@ -40,6 +40,7 @@ class PhpEngine implements Engine {
      *
      * @param string $path
      * @param array  $data
+     *
      * @return string
      */
     protected function evaluatePath( $path, $data ) {
@@ -52,7 +53,7 @@ class PhpEngine implements Engine {
         // an exception is thrown. This prevents any partial views from leaking.
         try {
             $this->files->getRequire( $path, $data );
-        } catch ( \Throwable $e ) {
+        } catch ( Throwable $e ) {
             $this->handleViewException( $e, $obLevel );
         }
 
@@ -64,15 +65,16 @@ class PhpEngine implements Engine {
      *
      * @param \Throwable $e
      * @param int        $obLevel
+     *
      * @return void
+     *
      * @throws \Throwable
      */
-    protected function handleViewException( \Throwable $e, $obLevel ) {
+    protected function handleViewException( Throwable $e, $obLevel ) {
         while ( ob_get_level() > $obLevel ) {
             ob_end_clean();
         }
 
         throw $e;
     }
-
 }
