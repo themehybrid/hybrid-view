@@ -9,6 +9,7 @@ use Hybrid\Contracts\View\Factory as FactoryContract;
 use Hybrid\Tools\Arr;
 use Hybrid\Tools\Traits\Macroable;
 use Hybrid\View\Engines\EngineResolver;
+use InvalidArgumentException;
 use function Hybrid\Tools\tap;
 
 class Factory implements FactoryContract {
@@ -57,9 +58,9 @@ class Factory implements FactoryContract {
      * @var array
      */
     protected $extensions = [
+        'php'  => 'php',
         'css'  => 'file',
         'html' => 'file',
-        'php'  => 'php',
     ];
 
     /**
@@ -103,7 +104,6 @@ class Factory implements FactoryContract {
      * @param \Hybrid\View\Engines\EngineResolver $engines
      * @param \Hybrid\View\ViewFinderInterface    $finder
      * @param \Hybrid\Contracts\Events\Dispatcher $events
-     * @return void
      */
     public function __construct( EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events ) {
         $this->finder  = $finder;
@@ -119,6 +119,7 @@ class Factory implements FactoryContract {
      * @param string                            $path
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return \Hybrid\Contracts\View\View
      */
     public function file( $path, $data = [], $mergeData = [] ) {
@@ -135,6 +136,7 @@ class Factory implements FactoryContract {
      * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return \Hybrid\Contracts\View\View
      */
     public function make( $view, $data = [], $mergeData = [] ) {
@@ -158,14 +160,18 @@ class Factory implements FactoryContract {
      * @param array                             $views
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return \Hybrid\Contracts\View\View
+     *
      * @throws \InvalidArgumentException
      */
     public function first( array $views, $data = [], $mergeData = [] ) {
-        $view = Arr::first( $views, fn( $view ) => $this->exists( $view ) );
+        $view = Arr::first( $views, function ( $view ) {
+            return $this->exists( $view );
+        } );
 
         if ( ! $view ) {
-            throw new \InvalidArgumentException( 'None of the views in the given array exist.' );
+            throw new InvalidArgumentException( 'None of the views in the given array exist.' );
         }
 
         return $this->make( $view, $data, $mergeData );
@@ -178,6 +184,7 @@ class Factory implements FactoryContract {
      * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return string
      */
     public function renderWhen( $condition, $view, $data = [], $mergeData = [] ) {
@@ -195,6 +202,7 @@ class Factory implements FactoryContract {
      * @param string                            $view
      * @param \Hybrid\Contracts\Arrayable|array $data
      * @param array                             $mergeData
+     *
      * @return string
      */
     public function renderUnless( $condition, $view, $data = [], $mergeData = [] ) {
@@ -208,6 +216,7 @@ class Factory implements FactoryContract {
      * @param array  $data
      * @param string $iterator
      * @param string $empty
+     *
      * @return string
      */
     public function renderEach( $view, $data, $iterator, $empty = 'raw|' ) {
@@ -219,9 +228,10 @@ class Factory implements FactoryContract {
         if ( count( $data ) > 0 ) {
             foreach ( $data as $key => $value ) {
                 $result .= $this->make(
-                    $view, [
-                        $iterator => $value,
+                    $view,
+                    [
                         'key'     => $key,
+                        $iterator => $value,
                     ]
                 )->render();
             }
@@ -243,6 +253,7 @@ class Factory implements FactoryContract {
      * Normalize a view name.
      *
      * @param string $name
+     *
      * @return string
      */
     protected function normalizeName( $name ) {
@@ -253,6 +264,7 @@ class Factory implements FactoryContract {
      * Parse the given data into a raw array.
      *
      * @param mixed $data
+     *
      * @return array
      */
     protected function parseData( $data ) {
@@ -265,6 +277,7 @@ class Factory implements FactoryContract {
      * @param string                            $view
      * @param string                            $path
      * @param \Hybrid\Contracts\Arrayable|array $data
+     *
      * @return \Hybrid\Contracts\View\View
      */
     protected function viewInstance( $view, $path, $data ) {
@@ -275,12 +288,13 @@ class Factory implements FactoryContract {
      * Determine if a given view exists.
      *
      * @param string $view
+     *
      * @return bool
      */
     public function exists( $view ) {
         try {
             $this->finder->find( $view );
-        } catch ( \InvalidArgumentException ) {
+        } catch ( InvalidArgumentException ) {
             return false;
         }
 
@@ -291,7 +305,9 @@ class Factory implements FactoryContract {
      * Get the appropriate view engine for the given path.
      *
      * @param string $path
+     *
      * @return \Hybrid\Contracts\View\Engine
+     *
      * @throws \InvalidArgumentException
      */
     public function getEngineFromPath( $path ) {
@@ -300,22 +316,27 @@ class Factory implements FactoryContract {
         }
 
         if ( ! $extension = $this->getExtension( $path ) ) {
-            throw new \InvalidArgumentException( "Unrecognized extension in file: {$path}." );
+            throw new InvalidArgumentException( "Unrecognized extension in file: {$path}." );
         }
 
-        return $this->engines->resolve( $this->pathEngineCache[ $path ] = $this->extensions[ $extension ] );
+        return $this->engines->resolve(
+            $this->pathEngineCache[ $path ] = $this->extensions[ $extension ]
+        );
     }
 
     /**
      * Get the extension used by the view file.
      *
      * @param string $path
+     *
      * @return string|null
      */
     protected function getExtension( $path ) {
         $extensions = array_keys( $this->extensions );
 
-        return Arr::first( $extensions, static fn( $value ) => str_ends_with( $path, '.' . $value ) );
+        return Arr::first( $extensions, function ( $value ) use ( $path ) {
+            return str_ends_with( $path, '.' . $value );
+        } );
     }
 
     /**
@@ -323,6 +344,7 @@ class Factory implements FactoryContract {
      *
      * @param array|string $key
      * @param mixed|null   $value
+     *
      * @return mixed
      */
     public function share( $key, $value = null ) {
@@ -341,7 +363,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function incrementRender() {
-        ++$this->renderCount;
+        $this->renderCount++;
     }
 
     /**
@@ -350,7 +372,7 @@ class Factory implements FactoryContract {
      * @return void
      */
     public function decrementRender() {
-        --$this->renderCount;
+        $this->renderCount--;
     }
 
     /**
@@ -365,6 +387,8 @@ class Factory implements FactoryContract {
     /**
      * Determine if the given once token has been rendered.
      *
+     * @param string $id
+     *
      * @return bool
      */
     public function hasRenderedOnce( string $id ) {
@@ -373,6 +397,8 @@ class Factory implements FactoryContract {
 
     /**
      * Mark the given once token as having been rendered.
+     *
+     * @param string $id
      *
      * @return void
      */
@@ -384,6 +410,7 @@ class Factory implements FactoryContract {
      * Add a location to the array of view locations.
      *
      * @param string $location
+     *
      * @return void
      */
     public function addLocation( $location ) {
@@ -391,10 +418,22 @@ class Factory implements FactoryContract {
     }
 
     /**
+     * Prepend a location to the array of view locations.
+     *
+     * @param string $location
+     *
+     * @return void
+     */
+    public function prependLocation( $location ) {
+        $this->finder->prependLocation( $location );
+    }
+
+    /**
      * Add a new namespace to the loader.
      *
      * @param string       $namespace
      * @param string|array $hints
+     *
      * @return $this
      */
     public function addNamespace( $namespace, $hints ) {
@@ -408,6 +447,7 @@ class Factory implements FactoryContract {
      *
      * @param string       $namespace
      * @param string|array $hints
+     *
      * @return $this
      */
     public function prependNamespace( $namespace, $hints ) {
@@ -421,6 +461,7 @@ class Factory implements FactoryContract {
      *
      * @param string       $namespace
      * @param string|array $hints
+     *
      * @return $this
      */
     public function replaceNamespace( $namespace, $hints ) {
@@ -435,6 +476,7 @@ class Factory implements FactoryContract {
      * @param string        $extension
      * @param string        $engine
      * @param \Closure|null $resolver
+     *
      * @return void
      */
     public function addExtension( $extension, $engine, $resolver = null ) {
@@ -558,6 +600,7 @@ class Factory implements FactoryContract {
      *
      * @param string $key
      * @param mixed  $default
+     *
      * @return mixed
      */
     public function shared( $key, $default = null ) {
@@ -572,5 +615,4 @@ class Factory implements FactoryContract {
     public function getShared() {
         return $this->shared;
     }
-
 }

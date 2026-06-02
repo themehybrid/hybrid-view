@@ -2,11 +2,11 @@
 
 namespace Hybrid\View;
 
+use ErrorException;
 use Hybrid\Container\Container;
-use Hybrid\Tools\Reflector;
+use Hybrid\Tools\Reflection\Reflector;
 
-class ViewException extends \ErrorException {
-
+class ViewException extends ErrorException {
     /**
      * Report the exception.
      *
@@ -34,5 +34,4 @@ class ViewException extends \ErrorException {
             return $exception->render();
         }
     }
-
 }

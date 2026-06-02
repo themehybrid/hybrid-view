@@ -8,15 +8,13 @@ use Hybrid\View\Engines\EngineResolver;
 use Hybrid\View\Engines\FileEngine;
 use Hybrid\View\Engines\PhpEngine;
 
-class Provider extends ServiceProvider {
-
+class ViewServiceProvider extends ServiceProvider {
     /**
      * Register the service provider.
      *
      * @return void
      */
     public function register() {
-
         // Register the view aliases in the container.
         $key     = 'view';
         $aliases = [ Factory::class, \Hybrid\Contracts\View\Factory::class ];
@@ -62,6 +60,7 @@ class Provider extends ServiceProvider {
      * @param \Hybrid\View\Engines\EngineResolver $resolver
      * @param \Hybrid\View\ViewFinderInterface    $finder
      * @param \Hybrid\Contracts\Events\Dispatcher $events
+     *
      * @return \Hybrid\View\Factory
      */
     protected function createFactory( $resolver, $finder, $events ) {
@@ -74,7 +73,9 @@ class Provider extends ServiceProvider {
      * @return void
      */
     public function registerViewFinder() {
-        $this->app->bind( 'view.finder', static fn( $app ) => new FileViewFinder( $app['files'], $app['config']['view.paths'] ?: [] ) );
+        $this->app->bind( 'view.finder', function ( $app ) {
+            return new FileViewFinder( $app['files'], $app['config']['view.paths'] ?: [] ); // Note: If view.paths is undefined, we must pass an empty array to the View Finder to avoid errors.
+        } );
     }
 
     /**
@@ -84,7 +85,7 @@ class Provider extends ServiceProvider {
      */
     public function registerEngineResolver() {
         $this->app->singleton( 'view.engine.resolver', function () {
-            $resolver = new EngineResolver();
+            $resolver = new EngineResolver;
 
             // Next, we will register the various view engines with the resolver so that the
             // environment will resolve the engines needed for various views based on the
@@ -101,20 +102,25 @@ class Provider extends ServiceProvider {
      * Register the file engine implementation.
      *
      * @param \Hybrid\View\Engines\EngineResolver $resolver
+     *
      * @return void
      */
     public function registerFileEngine( $resolver ) {
-        $resolver->register( 'file', static fn() => new FileEngine( Container::getInstance()->make( 'files' ) ) );
+        $resolver->register( 'file', function () {
+            return new FileEngine( Container::getInstance()->make( 'files' ) );
+        } );
     }
 
     /**
      * Register the PHP engine implementation.
      *
      * @param \Hybrid\View\Engines\EngineResolver $resolver
+     *
      * @return void
      */
     public function registerPhpEngine( $resolver ) {
-        $resolver->register( 'php', static fn() => new PhpEngine( Container::getInstance()->make( 'files' ) ) );
+        $resolver->register( 'php', function () {
+            return new PhpEngine( Container::getInstance()->make( 'files' ) );
+        } );
     }
-
 }

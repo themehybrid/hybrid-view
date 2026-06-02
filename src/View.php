@@ -3,6 +3,7 @@
 namespace Hybrid\View;
 
 use ArrayAccess;
+use BadMethodCallException;
 use Hybrid\Contracts\Arrayable;
 use Hybrid\Contracts\Htmlable;
 use Hybrid\Contracts\MessageProvider;
@@ -14,6 +15,7 @@ use Hybrid\Tools\Str;
 use Hybrid\Tools\Traits\Macroable;
 use Hybrid\Tools\ViewErrorBag;
 use Stringable;
+use Throwable;
 
 class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
 
@@ -64,7 +66,6 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * @param string                        $view
      * @param string                        $path
      * @param mixed                         $data
-     * @return void
      */
     public function __construct( Factory $factory, Engine $engine, $view, $path, $data = [] ) {
         $this->view    = $view;
@@ -79,7 +80,9 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Get the string contents of the view.
      *
      * @param callable|null $callback
+     *
      * @return string
+     *
      * @throws \Throwable
      */
     public function render( ?callable $callback = null ) {
@@ -94,7 +97,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
             $this->factory->flushStateIfDoneRendering();
 
             return ! is_null( $response ) ? $response : $contents;
-        } catch ( \Throwable $e ) {
+        } catch ( Throwable $e ) {
             $this->factory->flushState();
 
             throw $e;
@@ -105,6 +108,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Display the string contents of the view.
      *
      * @return void
+     *
      * @throws \Throwable
      */
     public function display( ?callable $callback = null ) {
@@ -161,20 +165,11 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
     }
 
     /**
-     * Get the sections of the rendered view.
-     *
-     * @return array
-     * @throws \Throwable
-     */
-    public function renderSections() {
-        return $this->render( fn() => $this->factory->getSections() );
-    }
-
-    /**
      * Add a piece of data to the view.
      *
      * @param string|array $key
      * @param mixed        $value
+     *
      * @return $this
      */
     public function with( $key, $value = null ) {
@@ -193,6 +188,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * @param string $key
      * @param string $view
      * @param array  $data
+     *
      * @return $this
      */
     public function nest( $key, $view, array $data = [] ) {
@@ -204,10 +200,11 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      *
      * @param \Hybrid\Contracts\MessageProvider|array $provider
      * @param string                                  $bag
+     *
      * @return $this
      */
     public function withErrors( $provider, $bag = 'default' ) {
-        return $this->with( 'errors', ( new ViewErrorBag() )->put(
+        return $this->with( 'errors', ( new ViewErrorBag )->put(
             $bag, $this->formatErrors( $provider )
         ) );
     }
@@ -216,6 +213,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Parse the given errors into an appropriate value.
      *
      * @param \Hybrid\Contracts\MessageProvider|array|string $provider
+     *
      * @return \Hybrid\Tools\MessageBag
      */
     protected function formatErrors( $provider ) {
@@ -264,6 +262,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Set the path to the view.
      *
      * @param string $path
+     *
      * @return void
      */
     public function setPath( $path ) {
@@ -329,6 +328,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Get a piece of data from the view.
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function &__get( $key ) {
@@ -340,6 +340,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      *
      * @param string $key
      * @param mixed  $value
+     *
      * @return void
      */
     public function __set( $key, $value ) {
@@ -350,6 +351,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Check if a piece of data is bound to the view.
      *
      * @param string $key
+     *
      * @return bool
      */
     public function __isset( $key ) {
@@ -360,6 +362,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Remove a piece of bound data from the view.
      *
      * @param string $key
+     *
      * @return void
      */
     public function __unset( $key ) {
@@ -371,7 +374,9 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      *
      * @param string $method
      * @param array  $parameters
+     *
      * @return \Hybrid\View\View
+     *
      * @throws \BadMethodCallException
      */
     public function __call( $method, $parameters ) {
@@ -380,7 +385,7 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
         }
 
         if ( ! str_starts_with( $method, 'with' ) ) {
-            throw new \BadMethodCallException( sprintf(
+            throw new BadMethodCallException( sprintf(
                 'Method %s::%s does not exist.', static::class, $method
             ) );
         }
@@ -401,10 +406,10 @@ class View implements ArrayAccess, Htmlable, Stringable, ViewContract {
      * Get the string contents of the view.
      *
      * @return string
+     *
      * @throws \Throwable
      */
     public function __toString() {
         return $this->render();
     }
-
 }

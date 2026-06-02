@@ -7,12 +7,12 @@ use Hybrid\Contracts\View\View as ViewContract;
 use Hybrid\Tools\Str;
 
 trait ManagesEvents {
-
     /**
      * Register a view creator event.
      *
      * @param array|string    $views
      * @param \Closure|string $callback
+     *
      * @return array
      */
     public function creator( $views, $callback ) {
@@ -29,6 +29,7 @@ trait ManagesEvents {
      * Register multiple view composers via an array.
      *
      * @param array $composers
+     *
      * @return array
      */
     public function composers( array $composers ) {
@@ -46,6 +47,7 @@ trait ManagesEvents {
      *
      * @param array|string    $views
      * @param \Closure|string $callback
+     *
      * @return array
      */
     public function composer( $views, $callback ) {
@@ -64,6 +66,7 @@ trait ManagesEvents {
      * @param string          $view
      * @param \Closure|string $callback
      * @param string          $prefix
+     *
      * @return \Closure|null
      */
     protected function addViewEvent( $view, $callback, $prefix = 'composing: ' ) {
@@ -86,6 +89,7 @@ trait ManagesEvents {
      * @param string $view
      * @param string $class
      * @param string $prefix
+     *
      * @return \Closure
      */
     protected function addClassEvent( $view, $class, $prefix ) {
@@ -94,7 +98,9 @@ trait ManagesEvents {
         // When registering a class based view "composer", we will simply resolve the
         // classes from the application IoC container then call the compose method
         // on the instance. This allows for convenient, testable view composers.
-        $callback = $this->buildClassEventCallback( $class, $prefix );
+        $callback = $this->buildClassEventCallback(
+            $class, $prefix
+        );
 
         $this->addEventListener( $name, $callback );
 
@@ -106,6 +112,7 @@ trait ManagesEvents {
      *
      * @param string $class
      * @param string $prefix
+     *
      * @return \Closure
      */
     protected function buildClassEventCallback( $class, $prefix ) {
@@ -114,7 +121,9 @@ trait ManagesEvents {
         // Once we have the class and method name, we can build the Closure to resolve
         // the instance out of the IoC container and call the method on it with the
         // given arguments that are passed to the Closure as the composer's data.
-        return fn() => $this->container->make( $class )->{$method}( ...func_get_args() );
+        return function () use ( $class, $method ) {
+            return $this->container->make( $class )->{$method}( ...func_get_args() );
+        };
     }
 
     /**
@@ -122,6 +131,7 @@ trait ManagesEvents {
      *
      * @param string $class
      * @param string $prefix
+     *
      * @return array
      */
     protected function parseClassEvent( $class, $prefix ) {
@@ -132,6 +142,7 @@ trait ManagesEvents {
      * Determine the class event method based on the given prefix.
      *
      * @param string $prefix
+     *
      * @return string
      */
     protected function classEventMethodForPrefix( $prefix ) {
@@ -143,11 +154,14 @@ trait ManagesEvents {
      *
      * @param string   $name
      * @param \Closure $callback
+     *
      * @return void
      */
     protected function addEventListener( $name, $callback ) {
         if ( str_contains( $name, '*' ) ) {
-            $callback = static fn( $name, array $data ) => $callback( $data[0] );
+            $callback = function ( $name, array $data ) use ( $callback ) {
+                return $callback( $data[0] );
+            };
         }
 
         $this->events->listen( $name, $callback );
@@ -157,6 +171,7 @@ trait ManagesEvents {
      * Call the composer for a given view.
      *
      * @param \Hybrid\Contracts\View\View $view
+     *
      * @return void
      */
     public function callComposer( ViewContract $view ) {
@@ -169,6 +184,7 @@ trait ManagesEvents {
      * Call the creator for a given view.
      *
      * @param \Hybrid\Contracts\View\View $view
+     *
      * @return void
      */
     public function callCreator( ViewContract $view ) {
@@ -176,5 +192,4 @@ trait ManagesEvents {
             $this->events->dispatch( $event, [ $view ] );
         }
     }
-
 }
